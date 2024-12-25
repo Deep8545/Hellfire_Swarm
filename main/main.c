@@ -45,8 +45,8 @@
 static const char *TAG = "DB_ESP32";
 
 uint8_t DB_WIFI_MODE = DB_WIFI_MODE_AP; // 1=Wifi AP mode, 2=Wifi client mode, 3=ESP-NOW LR Mode
-uint8_t DEFAULT_SSID[32] = "DroneBridge ESP32";
-uint8_t DEFAULT_PWD[64] = "dronebridge";
+uint8_t DEFAULT_SSID[32] = "Hellfire_Swarm";
+uint8_t DEFAULT_PWD[64] = "hellfire";
 char DEFAULT_AP_IP[32] = "192.168.2.1";
 char CURRENT_CLIENT_IP[32] = "192.168.2.1";
 uint8_t DEFAULT_CHANNEL = 6;
@@ -142,13 +142,13 @@ void start_mdns_service() {
         printf("MDNS Init failed: %d\n", err);
         return;
     }
-    ESP_ERROR_CHECK(mdns_hostname_set("dronebridge"));
-    ESP_ERROR_CHECK(mdns_instance_name_set("DroneBridge for ESP32"));
+    ESP_ERROR_CHECK(mdns_hostname_set("hellfire"));
+    ESP_ERROR_CHECK(mdns_instance_name_set("Hellfire for ESP32"));
 
     ESP_ERROR_CHECK(mdns_service_add(NULL, "_http", "_tcp", 80, NULL, 0));
     ESP_ERROR_CHECK(mdns_service_add(NULL, "_db_proxy", "_tcp", APP_PORT_PROXY, NULL, 0));
     ESP_ERROR_CHECK(mdns_service_add(NULL, "_db_comm", "_tcp", APP_PORT_COMM, NULL, 0));
-    ESP_ERROR_CHECK(mdns_service_instance_name_set("_http", "_tcp", "DroneBridge for ESP32"));
+    ESP_ERROR_CHECK(mdns_service_instance_name_set("_http", "_tcp", "Hellfire for ESP32"));
     ESP_LOGI(TAG, "MDNS Service started!");
 }
 
@@ -224,7 +224,7 @@ void init_wifi_apmode(int wifi_mode) {
 
     wifi_config_t wifi_config = {
             .ap = {
-                    .ssid = "DroneBridge_ESP32_Init",
+                    .ssid = "Hellfire_Swarm_AP",
                     .ssid_len = 0,
                     .authmode = WIFI_AUTH_WPA2_PSK,
                     .channel = DEFAULT_CHANNEL,
@@ -286,8 +286,8 @@ int init_wifi_clientmode() {
 
     wifi_config_t wifi_config = {
             .sta = {
-                    .ssid = "DroneBridge_ESP32_Init",
-                    .password = "dronebridge",
+                    .ssid = "Hellfire_Swarm_STA",
+                    .password = "hellfire",
                     .threshold.authmode = WIFI_AUTH_WEP
             },
     };
@@ -442,15 +442,15 @@ void app_main() {
             ESP_ERROR_CHECK(esp_event_loop_delete_default());
             esp_netif_destroy_default_wifi(esp_default_netif);
             ESP_ERROR_CHECK(esp_wifi_stop());
-            strncpy((char *) DEFAULT_SSID, "Failsafe DroneBridge ESP32", sizeof(DEFAULT_SSID));
-            strncpy((char *) DEFAULT_PWD, "dronebridge", sizeof(DEFAULT_PWD));
+            strncpy((char *) DEFAULT_SSID, "Failsafe_Hellfire_Swarm", sizeof(DEFAULT_SSID));
+            strncpy((char *) DEFAULT_PWD, "hellfire", sizeof(DEFAULT_PWD));
             init_wifi_apmode(DB_WIFI_MODE_AP);
         }
     }
 
     start_mdns_service();
     netbiosns_init();
-    netbiosns_set_name("dronebridge");
+    netbiosns_set_name("hellfire");
 
     ESP_ERROR_CHECK(init_fs());
     control_module();
