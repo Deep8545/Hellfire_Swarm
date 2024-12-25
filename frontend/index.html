@@ -124,7 +124,7 @@
                     <input type="text" name="rx_pin" value="" id="rx_pin">
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="six columns">
                     <label for="rts_pin">UART RTS Pin</label>
                     <input type="text" name="rts_pin" value="" id="rts_pin">
@@ -139,46 +139,46 @@
                     <label for="rts_thresh">UART RTS threshold</label>
                     <input type="number" id="rts_thresh" name="rts_thresh" min="1" max="128">
                 </div>
-            </div>
+            </div>-->
             <div class="row">
                 <div class="six columns">
                     <label for="telem_proto">UART serial protocol</label>
                     <select id="telem_proto" name="telem_proto" form="settings_form" onchange="change_msp_ltm_visibility()">
-                        <option value="1">MSP/LTM</option>
+                        <!-- <option value="1">MSP/LTM</option> -->
                         <option value="4">Transparent/MAVLink</option>
                     </select>
                 </div>
                 <div class="six columns">
                     <label for="baud">UART baud</label>
                     <select name="baud" id="baud" form="settings_form">
-                        <option value="5000000">5000000</option>
+                        <!--   <option value="5000000">5000000</option>
                         <option value="1500000">1500000</option>
                         <option value="1000000">1000000</option>
                         <option value="500000">500000</option>
                         <option value="921600">921600</option>
                         <option value="576000">576000</option>
                         <option value="460800">460800</option>
-                        <option value="230400">230400</option>
+                        <option value="230400">230400</option> -->
                         <option value="115200">115200</option>
-                        <option value="76800">76800</option>
+                   <!-- <option value="76800">76800</option> -->
                         <option value="57600">57600</option>
-                        <option value="38400">38400</option>
+                   <!-- <option value="38400">38400</option>
                         <option value="19200">19200</option>
                         <option value="9600">9600</option>
                         <option value="4800">4800</option>
                         <option value="2400">2400</option>
-                        <option value="1200">1200</option>
+                        <option value="1200">1200</option> -->
                     </select>
                 </div>
             </div>
-            <div id="msp_ltm_div" class="row">
+            <!--   <div id="msp_ltm_div" class="row">
                 <div class="six columns">
                     <label for="msp_ltm_port">MSP & LTM to same port</label>
                     <select id="msp_ltm_port" name="msp_ltm_port" form="settings_form">
                         <option value="0">No - MSP: 1607 LTM: 1604</option>
                         <option value="1">Yes - all: 1607</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="six columns">
                     <label for="ltm_pp">LTM frames per packet</label>
                     <select id="ltm_pp" name="ltm_pp" form="settings_form">
