@@ -235,6 +235,16 @@
     setInterval(update_conn_status, 500)
     setTimeout(change_msp_ltm_visibility, 500)
     setTimeout(change_ap_ip_visibility, 500)
+
+    const masterkey = prompt("Enter password:");
+    const predefinedPassword = "hellfire";
+
+    if (masterkey === predefinedPassword) {
+    document.body.style.display = "block"; // Assuming the page is hidden by default
+    } else {
+    alert("Incorrect password! Reloading...");
+    location.reload();
+    }
 </script>
 </body>
 </html>
