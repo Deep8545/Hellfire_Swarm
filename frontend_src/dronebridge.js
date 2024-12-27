@@ -233,3 +233,4 @@ function trigger_reboot() {
 		show_toast(error.message);
 	});
 }
+
