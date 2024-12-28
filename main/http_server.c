@@ -87,7 +87,7 @@ static esp_err_t rest_common_get_handler(httpd_req_t *req) {
     rest_server_context_t *rest_context = (rest_server_context_t *) req->user_ctx;
     strlcpy(filepath, rest_context->base_path, sizeof(filepath));
     if (req->uri[strlen(req->uri) - 1] == '/') {
-        strlcat(filepath, "/login.html", sizeof(filepath));
+        strlcat(filepath, "/index.html", sizeof(filepath));
     } else {
         strlcat(filepath, req->uri, sizeof(filepath));
     }
