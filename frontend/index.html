@@ -5,11 +5,11 @@
     <meta name="description" content="Settings for DB for ESP32">
     <meta name="author" content="Wolfgang Christl">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Confriguation settings for ESP32 </title>
-    <link rel="icon" type="image/png" sizes="192x192" href="android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>Confriguation settings </title>
+    <link rel="icon" type="image/png" sizes="192x192" href="./auxlog(192_192).jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="./auxlog(32_32).jpg">
+    <link rel="icon" type="image/png" sizes="96x96" href="./auxlog(96_96).jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="./auxlog(16_16).jpg">
     <meta name="theme-color" content="#3166FF">
     <style>
         /*
@@ -100,12 +100,13 @@
             <div class="row">
                 <div class="six columns">
                     <label for="wifi_ssid">SSID</label>
-                    <input type="text" name="wifi_ssid" value="" id="wifi_ssid">
+                    <input type="text" name="wifi_ssid" id="wifi_ssid" value="">
                 </div>
                 <div class="six columns">
-                    <label for="wifi_pass">Password</label>
-                    <input type="text" name="wifi_pass" value="" id="wifi_pass">
-                </div>
+    <label for="wifi_pass">Password</label>
+    <input type="text" name="wifi_pass" id="wifi_pass" value="" class="passs">
+    <small id="password-error" style="color: rgb(255, 0, 0); display: none;">Password must be at least 8 characters long.</small>
+</div>
             </div>
             <div class="row" style="display: none;">
                 <div id="ap_channel_div" class="twelve columns">
@@ -117,11 +118,11 @@
             <div class="row">
                 <div class="six columns">
                     <label for="tx_pin">UART TX Pin</label>
-                    <input type="text" name="tx_pin" value="" id="tx_pin">
+                    <input type="text" name="tx_pin" id="tx_pin" value="">
                 </div>
                 <div class="six columns">
                     <label for="rx_pin">UART RX Pin</label>
-                    <input type="text" name="rx_pin" value="" id="rx_pin">
+                    <input type="text" name="rx_pin"  id="rx_pin" value="">
                 </div>
             </div>
             <div class="row" id="rts_cts_row" style="display: none;">
@@ -203,7 +204,7 @@
     </div>
 </div>
 <div class="container">
-    <div id="about" style="margin-top: 1rem" class="row">Hellfire_Swarm for ESP32 - waiting for a response from the ESP32
+    <div id="about" style="margin-top: 1rem" class="row">Hellfire Swarm is waiting for a response ...
     </div>
 <script>
     // get settings once upon page load
@@ -216,7 +217,44 @@
     setInterval(update_conn_status, 500)
     setTimeout(change_msp_ltm_visibility, 500)
     setTimeout(change_ap_ip_visibility, 500)   
+  
 
+    document.getElementById("wifi_pass").addEventListener("input", function () {
+        const passwordField = document.getElementById("wifi_pass");
+        const errorMessage = document.getElementById("password-error");
+
+        if (passwordField.value.length < 8) {
+            // Show the error message
+            errorMessage.style.display = "block";
+        } else {
+            // Hide the error message
+            errorMessage.style.display = "none";
+        }
+    });
+
+    
+    function save_settings() {
+    // Prompt the user for a password
+    const enteredPassword = prompt("Enter password to save settings:");
+    const masterPassword = "counterswarm";
+
+    if (enteredPassword === masterPassword) {
+        // Password matches, proceed with saving settings
+        let form = document.getElementById("settings_form");
+        let json_data = toJSONString(form);
+        send_json("api/settings/change", json_data).then(send_response => {
+            console.log(send_response);
+            conn_status = 1;
+            show_toast(send_response["msg"]);
+            get_settings(); // update UI with new settings
+        }).catch(error => {
+            show_toast(error.message);
+        });
+    } else {
+        // Password mismatch, show unauthorized message
+        show_toast("Unauthorized: Incorrect password");
+    }
+}
 </script>
 </body>
 </html>

@@ -213,17 +213,28 @@ function show_toast(msg) {
 }
 
 function save_settings() {
-	let form = document.getElementById("settings_form")
-	let json_data = toJSONString(form)
-	send_json("api/settings/change", json_data).then(send_response => {
-		console.log(send_response);
-		conn_status = 1
-		show_toast(send_response["msg"])
-		get_settings()  // update UI with new settings
-	}).catch(error => {
-		show_toast(error.message);
-	});
+    // Prompt the user for a password
+    const enteredPassword = prompt("Enter password to save settings:");
+    const masterPassword = "hellfire";
+
+    if (enteredPassword === masterPassword) {
+        // Password matches, proceed with saving settings
+        let form = document.getElementById("settings_form");
+        let json_data = toJSONString(form);
+        send_json("api/settings/change", json_data).then(send_response => {
+            console.log(send_response);
+            conn_status = 1;
+            show_toast(send_response["msg"]);
+            get_settings(); // update UI with new settings
+        }).catch(error => {
+            show_toast(error.message);
+        });
+    } else {
+        // Password mismatch, show unauthorized message
+        show_toast("Unauthorized: Incorrect password");
+    }
 }
+
 
 function trigger_reboot() {
 	get_json("api/system/reboot").then(json_data => {
